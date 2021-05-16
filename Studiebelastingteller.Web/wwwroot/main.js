@@ -1,0 +1,1 @@
+document.getElementById("js-output").innerText="Hallo vanuit /src/index.js.";
