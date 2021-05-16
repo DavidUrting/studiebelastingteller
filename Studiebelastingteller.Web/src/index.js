@@ -1,1 +1,4 @@
-﻿document.getElementById("js-output").innerText = "Hallo vanuit /src/index.js.";
+﻿import { Vakkenlijst } from "./vakkenlijst";
+
+let vakkenlijst = new Vakkenlijst();
+vakkenlijst.initialiseer();
