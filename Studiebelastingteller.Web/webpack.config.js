@@ -6,4 +6,5 @@ module.exports = {
         filename: 'main.js',
         path: path.resolve(__dirname, 'wwwroot'),
     },
+    devtool: 'eval-source-map'
 };
