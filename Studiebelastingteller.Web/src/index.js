@@ -1,7 +1,6 @@
 ﻿import { Vakkenlijst } from "./vakkenlijst";
 
 let vakkenlijst = new Vakkenlijst();
-vakkenlijst.init();
 
 document.getElementById("voegVakToe").addEventListener("click", function (evt) {
     vakkenlijst.addVak("Test", 4);

@@ -5,35 +5,36 @@ const localStorageKey = "vakkenLijst";
 export class Vakkenlijst {
     constructor() {
         this._vakken = [];
-    }
 
-    init() {
         // Ophalen van de lijst van vakken uit de local storage.
         // Opgelet: dit kan null zijn indien de pagina een eerste keer getoond wordt.
         let vakkenLijstFromStorage = localStorage.getItem(localStorageKey);
         if (vakkenLijstFromStorage) {
-            // Indien niet null: de JSON string terug omzetten naar een array van vakken/
-            this._vakken = JSON.parse(vakkenLijstFromStorage);
+            // Indien niet null: de JSON string terug omzetten naar een array van vakken.
+            // Opgelet: dit zijn gewone JavaScript objecten die niet (meer) afstammen van de Vak class.
+            // Vandaar loopen we over alle vakken uit de JSON en maken we terug volwaarde Vak-objecten van.
+            let vakkenFromJson = JSON.parse(vakkenLijstFromStorage);
+            vakkenFromJson.forEach(vakFromJson => {
+                let vak = Vak.restoreFromJsonObject(this, vakFromJson);
+                this._vakken.push(vak);
+            });
         }
         else {
             // Indien wel null: al direct een cool vak toevoegen om toch iets te tonen :)
-            this._vakken.push(new Vak("Front end gevorderd", 6));
+            let vak = new Vak(this, "Front end gevorderd", 6);
+            this._vakken.push(vak);
         }
-
-        // Deze 'lijst' koppelen aan al de opgeladen vakken
-        this._vakken.forEach(vak => vak.init(this));
 
         // Nadien kan de lijst van vakkenop het scherm 'gerenderd' worden.
         this.render();
     }
 
     addVak(naam, studiepunten) {
-        let vak = new Vak(naam, studiepunten);
+        let vak = new Vak(this, naam, studiepunten);
         let bestaandVak = this._vakken.filter(v => v.naam === naam);
         if (bestaandVak.length > 0) throw `Er bestaat reeds een vak met de naam ${naam}`;
         else {
             this._vakken.push(vak);
-            vak.init(this);
             this.save();
             this.render();
         }

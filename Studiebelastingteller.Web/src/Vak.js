@@ -1,15 +1,19 @@
 ﻿let id = 0;
 
 export class Vak {
-    constructor(naam, studiepunten) {
+    static restoreFromJsonObject(vakkenlijst, jsonObject) {
+        let vak = new Vak(vakkenlijst, jsonObject._naam, jsonObject._studiepunten);
+        vak._aantalUren = jsonObject._aantalUren;
+        return vak;
+    }
+
+    constructor(vakkenlijst, naam, studiepunten) {
+        this._vakkenlijst = vakkenlijst;
         this._id = id++;
+
         this._naam = naam;
         this._studiepunten = studiepunten;
         this._aantalUren = 0;
-    }
-
-    init(vakkenlijst) {
-        this._vakkenlijst = vakkenlijst;
     }
 
     // Primaire (technische) sleutel van een vak.
@@ -22,19 +26,8 @@ export class Vak {
         return this._naam;
     }
 
-    set naam(val) {
-        this._naam = val;
-    }
-
     get studiepunten() {
         return this._studiepunten;
-    }
-
-    set studiepunten(val) {
-        if (isNaN(val) || val < 0) {
-            throw "Gelieve een getal groter dan 0 op te geven";
-        }
-        this._studiepunten = value;
     }
 
     // Het geschat aantal uren is een 'berekende' property.
@@ -52,6 +45,9 @@ export class Vak {
             throw "Gelieve een getal groter dan 0 op te geven";
         }
         this._aantalUren = val;
+
+        // Na het aanpassen van de uren direct ook weer saven...
+        this._vakkenlijst.save();
     }
 
     render(tbody) {
