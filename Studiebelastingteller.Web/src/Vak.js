@@ -1,19 +1,26 @@
-﻿let id = 0;
+﻿let nextId = 0;
 
 export class Vak {
     static restoreFromJsonObject(vakkenlijst, jsonObject) {
-        let vak = new Vak(vakkenlijst, jsonObject._naam, jsonObject._studiepunten);
-        vak._aantalUren = jsonObject._aantalUren;
+        // de id-teller op het maximaal 'tegengekomen' id zetten zodat er geen id-clashes ontstaan bij toevoegen van nieuwe vakken.
+        nextId = Math.max(nextId, jsonObject._id + 1);
+
+        // En het 'vak' object aanmaken op basis van de settings in het vak uit de JSON.
+        let vak = new Vak(vakkenlijst, jsonObject._id, jsonObject._naam, jsonObject._studiepunten, jsonObject._aantalUren);
         return vak;
     }
 
-    constructor(vakkenlijst, naam, studiepunten) {
+    constructor(vakkenlijst, id, naam, studiepunten, aantalUren) {
         this._vakkenlijst = vakkenlijst;
-        this._id = id++;
 
+        if (id === null || id === undefined || id < 0) {
+            this._id = nextId++;
+        } else {
+            this._id = id;
+        }
         this._naam = naam;
         this._studiepunten = studiepunten;
-        this._aantalUren = 0;
+        this._aantalUren = aantalUren;
     }
 
     // Primaire (technische) sleutel van een vak.
@@ -51,7 +58,19 @@ export class Vak {
     }
 
     render(tbody) {
-        tbody.innerHTML += `<tr id="vak-${this.id}"><td>${this.naam}</td><td>${this.studiepunten}</td><td>${this.geschatAantalUren}</td><td><input type="number" value="${this.aantalUren}" readonly /></td><td><button class="btn btn-primary">+</button><button class="btn btn-danger float-end">x</button></td></tr>`;
+        let tr =
+`<tr id="vak-${this.id}">
+    <td>${this.naam}</td>
+    <td>${this.studiepunten}</td>
+    <td>${this.geschatAantalUren}</td>
+    <td><input type="number" value="${this.aantalUren}" readonly /></td>
+    <td>
+        <button class="btn btn-primary">+</button>
+        <button class="btn btn-danger float-end">x</button>
+    </td>
+</tr>`;
+        tbody.innerHTML += tr;
+
         let input = document.querySelector(`#vak-${this.id} input[type='number']`);
         let verhoogAantalUrenButton = document.querySelector(`#vak-${this.id} > td:last-child > button:first-child`);
         verhoogAantalUrenButton.addEventListener("click", (evt) => {

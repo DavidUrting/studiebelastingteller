@@ -21,7 +21,7 @@ export class Vakkenlijst {
         }
         else {
             // Indien wel null: al direct een cool vak toevoegen om toch iets te tonen :)
-            let vak = new Vak(this, "Front end gevorderd", 6);
+            let vak = new Vak(this, -1, "Front end gevorderd", 6, 0);
             this._vakken.push(vak);
         }
 
@@ -30,7 +30,7 @@ export class Vakkenlijst {
     }
 
     addVak(naam, studiepunten) {
-        let vak = new Vak(this, naam, studiepunten);
+        let vak = new Vak(this, -1, naam, studiepunten, 0);
         let bestaandVak = this._vakken.filter(v => v.naam === naam);
         if (bestaandVak.length > 0) throw `Er bestaat reeds een vak met de naam ${naam}`;
         else {
