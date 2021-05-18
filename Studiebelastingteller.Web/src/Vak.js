@@ -73,16 +73,17 @@ export class Vak {
 
     render(tbody) {
         let tr =
-`<tr id="vak-${this.id}">
-    <td><input name="naam" type="text" value="${this.naam}" class="form-control" /></td>
-    <td><input name="studiepunten" type="number" value="${this.studiepunten}" min="1" class="form-control" /></td>
-    <td><span>${this.geschatAantalUren}</span></td>
-    <td><input name="aantalUren" type="number" value="${this.aantalUren}" min="0" class="form-control" readonly /></td>
-    <td>
-        <button class="btn btn-primary">+</button>
-        <button class="btn btn-danger float-end">x</button>
-    </td>
-</tr>`;
+            `<tr id="vak-${this.id}">
+                <td><input name="naam" type="text" value="${this.naam}" class="form-control" /></td>
+                <td><input name="studiepunten" type="number" value="${this.studiepunten}" min="1" class="form-control" /></td>
+                <td><span>${this.geschatAantalUren}</span></td>
+                <td><input name="aantalUren" type="number" value="${this.aantalUren}" min="0" class="form-control" readonly /></td>
+                <td>
+                    <button class="btn btn-primary">+</button>
+                    <button class="btn btn-danger float-end">x</button>
+                </td>
+            </tr>`;
+
         // innerHTML gebruiken is gevaarlijk: want de tweede keer dat je een rij toevoegt zal de HTML content vervangen worden waardoor
         // alle event handlers weggegooid worden...
         tbody.insertAdjacentHTML('beforeend', tr);
@@ -147,7 +148,7 @@ export class Vak {
     _geefFeedbackBijOverschrijding() {
         let aantalUrenInput = document.querySelector(`#vak-${this.id} input[name='aantalUren']`);
         if (this.aantalUren > this.geschatAantalUren) {
-            aantalUrenInput.style.backgroundColor = "red";
+            aantalUrenInput.style.backgroundColor = "orange";
         } else {
             aantalUrenInput.style.backgroundColor = "unset";
         }

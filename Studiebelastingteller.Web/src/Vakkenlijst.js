@@ -24,9 +24,6 @@ export class Vakkenlijst {
             let vak = new Vak(this, -1, "Front end gevorderd", 6, 0);
             this._vakken.push(vak);
         }
-
-        // Nadien kan de lijst van vakkenop het scherm 'gerenderd' worden.
-        this.render();
     }
 
     addVak(naam, studiepunten) {
@@ -36,7 +33,7 @@ export class Vakkenlijst {
         else {
             this._vakken.push(vak);
             this.save();
-            this.render();
+            this._renderVakken();
         }
     }
 
@@ -51,7 +48,7 @@ export class Vakkenlijst {
         if (indexToDelete >= 0) {
             this._vakken.splice(indexToDelete, 1);
             this.save();
-            this.render();
+            this._renderVakken();
         }
     }
 
@@ -66,9 +63,49 @@ export class Vakkenlijst {
             }));
     }
 
-    render() {
-        let tbody = document.querySelector("tbody");
+    render(element) {
+        let table =
+            `<table id="vakkenlijst" class="table">
+                <thead>
+                    <tr>
+                        <th>Vak</th>
+                        <th>Studiepunten</th>
+                        <th>Geschat aantal uren</th>
+                        <th>Aantal uren</th>
+                        <th></th> <!-- Voor de action buttons -->
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><button id="voegVakToe" class="btn btn-secondary">Nieuw vak</button></td>
+                        <td></td>
+                        <td></td>
+                        <td><button id="corrigeerUren" class="btn btn-secondary">Correctie</button></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>`;
 
+        element.innerHTML = table;
+
+        document.getElementById("voegVakToe").addEventListener("click", (evt) => {
+            this.addVak("Vak", 1);
+        });
+
+        document.getElementById("corrigeerUren").addEventListener("click", (evt) => {
+            let buttons = document.querySelectorAll("#vakkenlijst input");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].removeAttribute("readonly");
+            }
+        });
+
+        this._renderVakken();
+    }
+
+    _renderVakken() {
+        let tbody = document.querySelector("#vakkenlijst tbody");
         tbody.innerHTML = ""; // Indien render een zoveelste keer wordt aangeroepen: de rijen verwijderen en opnieuw aanmaken.
         for (let i = 0; i < this._vakken.length; i++) {
             // Elke rij mag zichzelf dan 'renderen' in het HTML document.
