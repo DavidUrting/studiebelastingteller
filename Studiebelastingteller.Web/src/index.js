@@ -7,14 +7,14 @@ document.getElementById("corrigeerUren").addEventListener("click", (evt) => {
     }
 });
 
-let aantalUrenInputs = document.querySelectorAll("#vakkenlijst input");
+let aantalUrenInputs = document.querySelectorAll("#vakkenlijst tbody input");
 for (let i = 0; i < aantalUrenInputs.length; i++) {
     aantalUrenInputs[i].addEventListener("change", (evt) => {
         try {
             this.resetError(aantalUrenInput[i]);
 
-            let vakId = evt.target.parent.parent.getAttribute("id");
-            this.geefFeedbackBijOverschrijding(vakId);
+            let vakId = evt.target.parentNode.parentNode.getAttribute("id");
+            geefFeedbackBijOverschrijding(vakId);
             save();
         } catch (ex) {
             this.setError(aantalUrenInput, ex);
@@ -24,11 +24,11 @@ for (let i = 0; i < aantalUrenInputs.length; i++) {
 
 let verhoogAantalUrenButtons = document.querySelectorAll("#vakkenlijst tbody button");
 for (let i = 0; i < verhoogAantalUrenButtons.length; i++) {
-    aantalUrenInputs[i].addEventListener("click", (evt) => {
-        let vakId = evt.target.parent.parent.getAttribute("id");
+    verhoogAantalUrenButtons[i].addEventListener("click", (evt) => {
+        let vakId = evt.target.parentNode.parentNode.getAttribute("id");
         let aantalUrenInput = document.querySelector(`#${vakId} input`);
         aantalUrenInput.value = parseInt(aantalUrenInput.value) + 1;
-        this.geefFeedbackBijOverschrijding(vakId);
+        geefFeedbackBijOverschrijding(vakId);
         save();
     });
 }
@@ -38,15 +38,16 @@ for (let i = 0; i < verhoogAantalUrenButtons.length; i++) {
 // Opgelet: dit kan null zijn indien de pagina een eerste keer getoond wordt.
 let vakkenEnAantalUren = localStorage.getItem(localStorageKey);
 if (vakkenEnAantalUren) {
-    for (let i = 0; i < vakkenEnAantalUren.length; i++) {
-        let aantalUrenInput = document.querySelector(`#${vakkenEnAantalUren[i].vakId} input`);
-        aantalUrenInput.value = vakkenEnAantalUren[i].aantalUren;
-    }
+    vakkenEnAantalUren = JSON.parse(vakkenEnAantalUren);
+//    for (let i = 0; i < vakkenEnAantalUren.length; i++) {
+//        let aantalUrenInput = document.querySelector(`#${vakkenEnAantalUren[i].vakId} input`);
+//        aantalUrenInput.value = vakkenEnAantalUren[i].aantalUren;
+//    }
 }
 
 function save() {
     let vakkenEnAantalUren = [];
-    let vakken = document.querySelectorAll("tr");
+    let vakken = document.querySelectorAll("#vakkenlijst tbody tr");
     for (let i = 0; i < vakken.length; i++) {
         let vakId = vakken[i].getAttribute("id");
         let aantalUren = document.querySelector(`#${vakId} input`).value;
