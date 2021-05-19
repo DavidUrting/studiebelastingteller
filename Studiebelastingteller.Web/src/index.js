@@ -11,13 +11,13 @@ let aantalUrenInputs = document.querySelectorAll("#vakkenlijst tbody input");
 for (let i = 0; i < aantalUrenInputs.length; i++) {
     aantalUrenInputs[i].addEventListener("change", (evt) => {
         try {
-            this.resetError(aantalUrenInput[i]);
+            resetError(aantalUrenInputs[i]);
 
             let vakId = evt.target.parentNode.parentNode.getAttribute("id");
             geefFeedbackBijOverschrijding(vakId);
             save();
         } catch (ex) {
-            this.setError(aantalUrenInput, ex);
+            setError(aantalUrenInputs[i], ex);
         }
     });
 }
@@ -36,13 +36,13 @@ for (let i = 0; i < verhoogAantalUrenButtons.length; i++) {
 
 // Ophalen van de lijst van vakken uit de local storage.
 // Opgelet: dit kan null zijn indien de pagina een eerste keer getoond wordt.
-let vakkenEnAantalUren = localStorage.getItem(localStorageKey);
-if (vakkenEnAantalUren) {
-    vakkenEnAantalUren = JSON.parse(vakkenEnAantalUren);
-//    for (let i = 0; i < vakkenEnAantalUren.length; i++) {
-//        let aantalUrenInput = document.querySelector(`#${vakkenEnAantalUren[i].vakId} input`);
-//        aantalUrenInput.value = vakkenEnAantalUren[i].aantalUren;
-//    }
+let vakkenEnAantalUrenAsString = localStorage.getItem(localStorageKey);
+if (vakkenEnAantalUrenAsString) {
+    let vakkenEnAantalUren = JSON.parse(vakkenEnAantalUrenAsString);
+    for (let i = 0; i < vakkenEnAantalUren.length; i++) {
+        let aantalUrenInput = document.querySelector('#' + vakkenEnAantalUren[i].vakId + ' input');
+        aantalUrenInput.value = vakkenEnAantalUren[i].aantalUren;
+    }
 }
 
 function save() {
