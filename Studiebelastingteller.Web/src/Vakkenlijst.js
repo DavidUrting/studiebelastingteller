@@ -20,9 +20,17 @@ export class Vakkenlijst {
             });
         }
         else {
-            // Indien wel null: al direct een cool vak toevoegen om toch iets te tonen :)
-            let vak = new Vak(this, -1, "Front end gevorderd", 6, 0);
-            this._vakken.push(vak);
+            // Indien wel null: al direct vakken toevoegen :)
+            this._vakken.push(new Vak(this, -1, "Database systemen: basis", 4, 0));
+            this._vakken.push(new Vak(this, -1, "Database systemen: gevorderd", 4, 0));
+            this._vakken.push(new Vak(this, -1, "Object oriented analysis", 4, 0));
+            this._vakken.push(new Vak(this, -1, "Programmeren met C#: basis", 6, 0));
+            this._vakken.push(new Vak(this, -1, "Programmeren met C#: gevorderd", 6, 0));
+            this._vakken.push(new Vak(this, -1, "Front end: basis", 4, 0));
+            this._vakken.push(new Vak(this, -1, "Front end: gevorderd", 6, 0));
+            this._vakken.push(new Vak(this, -1, "Geïntegreerd project 1", 3, 0));
+            this._vakken.push(new Vak(this, -1, "Geïntegreerd project 2", 4, 0));
+            this.save();
         }
     }
 
