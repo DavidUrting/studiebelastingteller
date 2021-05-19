@@ -11,13 +11,13 @@ let aantalUrenInputs = document.querySelectorAll("#vakkenlijst tbody input");
 for (let i = 0; i < aantalUrenInputs.length; i++) {
     aantalUrenInputs[i].addEventListener("change", (evt) => {
         try {
-            resetError(aantalUrenInputs[i]);
+            resetError(evt.target);
 
             let vakId = evt.target.parentNode.parentNode.getAttribute("id");
             geefFeedbackBijOverschrijding(vakId);
             save();
         } catch (ex) {
-            setError(aantalUrenInputs[i], ex);
+            setError(evt.target, ex);
         }
     });
 }
@@ -40,7 +40,7 @@ let vakkenEnAantalUrenAsString = localStorage.getItem(localStorageKey);
 if (vakkenEnAantalUrenAsString) {
     let vakkenEnAantalUren = JSON.parse(vakkenEnAantalUrenAsString);
     for (let i = 0; i < vakkenEnAantalUren.length; i++) {
-        let aantalUrenInput = document.querySelector('#' + vakkenEnAantalUren[i].vakId + ' input');
+        let aantalUrenInput = document.querySelector(`#${vakkenEnAantalUren[i].vakId} input`);
         aantalUrenInput.value = vakkenEnAantalUren[i].aantalUren;
     }
 }
@@ -52,7 +52,7 @@ function save() {
         let vakId = vakken[i].getAttribute("id");
         let aantalUren = document.querySelector(`#${vakId} input`).value;
         vakkenEnAantalUren.push({
-            vakid: vakId,
+            vakId: vakId,
             aantalUren: aantalUren
         });
     }
@@ -63,13 +63,13 @@ function save() {
 }
 
 function geefFeedbackBijOverschrijding(vakId) {
-    // TODO
-    //    let aantalUrenInput = document.querySelector(`#vak-${this.id} input[name='aantalUren']`);
-    //    if (this.aantalUren > this.geschatAantalUren) {
-    //        aantalUrenInput.style.backgroundColor = "orange";
-    //    } else {
-    //        aantalUrenInput.style.backgroundColor = "unset";
-    //    }
+    //let maxAantalUren = parseInt(document.querySelector(`#vak-${vakId} .aantalUren`).innerText);
+    //let aantalUrenInput = parseInt(document.querySelector(`#vak-${vakId} input[name='aantalUren']`).value);
+    //if (aantalUrenInput > maxAantalUrenTd) {
+    //    aantalUrenInput.style.backgroundColor = "orange";
+    //} else {
+    //    aantalUrenInput.style.backgroundColor = "unset";
+    //}
 }
 
 function resetError(input) {
