@@ -13,7 +13,112 @@
 <body class="container">
     <h1>UCLL studiebelastingteller</h1>
     <section>
-        <!-- De Vakkenlijst 'rendert' zichzelf in deze section. -->
+        <table id="vakkenlijst" class="table">
+            <thead>
+                <tr>
+                    <th>Vak</th>
+                    <th>Studiepunten</th>
+                    <th>Geschat aantal uren</th>
+                    <th>Aantal uren</th>
+                    <th></th> <!-- Voor de action buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="vak-dsb">
+                    <td>Database systemen: basis</td>
+                    <td>4</td>
+                    <td>120</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr  id="vak-dsg">
+                    <td>Database systemen: gevorderd</td>
+                    <td>4</td>
+                    <td>120</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-ooa">
+                    <td>Object oriented analysis</td>
+                    <td>4</td>
+                    <td>120</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr  id="vak-pmcb">
+                    <td>Programmeren met C#: basis</td>
+                    <td>6</td>
+                    <td>180</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-pmcg">
+                    <td>Programmeren met C#: gevorderd</td>
+                    <td>6</td>
+                    <td>180</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-feb">
+                    <td>Front end: basis</td>
+                    <td>4</td>
+                    <td>120</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-feg">
+                    <td>Front end: gevorderd</td>
+                    <td>6</td>
+                    <td>180</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-gip1">
+                    <td>Geïntegreerd project 1</td>
+                    <td>3</td>
+                    <td>90</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+                <tr id="vak-gip2">
+                    <td>Geïntegreerd project 2</td>
+                    <td>4</td>
+                    <td>120</td>
+                    <td><input type="number" value="0" readonly /></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button id="corrigeerUren" class="btn btn-secondary">Correctie</button></td>
+                    <td>
+                        <button class="btn btn-primary">+</button>
+                        <button class="btn btn-danger float-end">x</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
