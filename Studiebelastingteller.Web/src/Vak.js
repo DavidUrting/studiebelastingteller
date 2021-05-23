@@ -8,6 +8,7 @@ export class Vak {
 
     // Een object dat wordt aangemaakt vanuit een JSON object is 'klasseloos'.
     // We moeten daar dus zelf weer een Vak-object van maken.
+    // Bemerk dat dit een 'static' methode is: Vakkenlijst kan dit dus aanroepen op de Vak-class.
     static restoreFromJsonObject(vakkenlijst, jsonObject) {
         // de id-teller op het maximaal 'tegengekomen' id zetten zodat er geen id-clashes ontstaan bij toevoegen van nieuwe vakken.
         nextId = Math.max(nextId, jsonObject._id + 1);
@@ -18,8 +19,8 @@ export class Vak {
     }
 
     // Een vak krijgt een aantal argumenten mee bij constructie.
-    // Onder andere geeft het Vakkenlijst-object zichzelf ook door aan het vak.
-    // Zo kan het vak methods aanroepen op de Vakkenlijst bij bepaalde gebeurtenissen (zoals de save() methode).
+    // Onder andere geeft het Vakkenlijst-object zichzelf door aan het vak.
+    // Zo kan het vak methods aanroepen op de Vakkenlijst bij bepaalde gebeurtenissen (zoals de save() en deleteVak() methoden).
     constructor(vakkenlijst, id, naam, studiepunten, aantalUren) {
         this._vakkenlijst = vakkenlijst;
 
@@ -97,8 +98,11 @@ export class Vak {
 
         // innerHTML gebruiken is gevaarlijk: want de tweede keer dat je een rij toevoegt zal de HTML content vervangen worden waardoor
         // alle event handlers weggegooid worden...
+        // Dit kan je oplossen door gebruik te maken van insertAdjacentHTML.
         tbody.insertAdjacentHTML('beforeend', tr);
 
+        // Toevoegen van een 'change' handler aan alle input fields voor de naam van het vak.
+        // De handler heeft een try-catch omdat de 'naam' setter mogelijks exceptions kan opgooien indien de naam bijvoorbeeld leeg is.
         let naamInput = document.querySelector(`#vak-${this.id} input[name='naam']`);
         naamInput.addEventListener("change", (evt) => {
             try {
@@ -111,6 +115,8 @@ export class Vak {
             }
         });
 
+        // Toevoegen van een 'change' handler aan alle input fields voor de studiepunten van het vak.
+        // De handler heeft een try-catch omdat de 'studiepunten' setter mogelijks exceptions kan opgooien indien het aantal studiepunten kleiner dan 1 is.
         let studiepuntenInput = document.querySelector(`#vak-${this.id} input[name='studiepunten']`);
         let geschatAantalUrenSpan = document.querySelector(`#vak-${this.id} span`);
         studiepuntenInput.addEventListener("change", (evt) => {
@@ -126,7 +132,8 @@ export class Vak {
             }
         });
 
-
+        // Toevoegen van een 'change' handler aan alle input fields voor het aantal uren van het vak.
+        // De handler heeft een try-catch omdat de 'aantalUren' setter mogelijks exceptions kan opgooien indien het aantal uren kleiner dan 0 is.
         let aantalUrenInput = document.querySelector(`#vak-${this.id} input[name='aantalUren']`);
         aantalUrenInput.addEventListener("change", (evt) => {
             try {
@@ -140,6 +147,8 @@ export class Vak {
             }            
         });
 
+        // Toevoegen van een 'click' handler aan alle '+' buttons.
+        // Dit zorgt voor het verhogen van het aantal uren.
         let verhoogAantalUrenButton = document.querySelector(`#vak-${this.id} > td:last-child > button:first-child`);
         verhoogAantalUrenButton.addEventListener("click", (evt) => {
             this.aantalUren++;
@@ -147,6 +156,8 @@ export class Vak {
             this._geefFeedbackBijOverschrijding();
         });
 
+        // Toevoegen van een 'click' handler aan alle delete buttons.
+        // Dit zorgt voor het verwijderen van het vak waarop geklikt is.
         let deleteButton = document.querySelector(`#vak-${this.id} > td:last-child > button:last-child`);
         deleteButton.addEventListener("click", (evt) => {
             this._vakkenlijst.deleteVak(this.id);
@@ -156,6 +167,7 @@ export class Vak {
         this._geefFeedbackBijOverschrijding();
     }
 
+    // Deze methode zorgt voor visuele feedback indien het aantal uren groter is dan het maximum aantal uren.
     _geefFeedbackBijOverschrijding() {
         let aantalUrenInput = document.querySelector(`#vak-${this.id} input[name='aantalUren']`);
         if (this.aantalUren > this.geschatAantalUren) {
