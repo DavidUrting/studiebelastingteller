@@ -1,6 +1,13 @@
 ﻿let nextId = 0;
 
+// Objecten van deze klasse stellen een vak voor.
+// Elk vak heeft een unieke ID (= een technische sleutel).
+// Om zeker te zijn dat een sleutel slechts éénmaal wordt toegekend hebben we een variabele nextId gedeclareerd
+// die telkens zal verhoogd worden bij aanmaak van een nieuw vak.
 export class Vak {
+
+    // Een object dat wordt aangemaakt vanuit een JSON object is 'klasseloos'.
+    // We moeten daar dus zelf weer een Vak-object van maken.
     static restoreFromJsonObject(vakkenlijst, jsonObject) {
         // de id-teller op het maximaal 'tegengekomen' id zetten zodat er geen id-clashes ontstaan bij toevoegen van nieuwe vakken.
         nextId = Math.max(nextId, jsonObject._id + 1);
@@ -10,6 +17,9 @@ export class Vak {
         return vak;
     }
 
+    // Een vak krijgt een aantal argumenten mee bij constructie.
+    // Onder andere geeft het Vakkenlijst-object zichzelf ook door aan het vak.
+    // Zo kan het vak methods aanroepen op de Vakkenlijst bij bepaalde gebeurtenissen (zoals de save() methode).
     constructor(vakkenlijst, id, naam, studiepunten, aantalUren) {
         this._vakkenlijst = vakkenlijst;
 
@@ -71,6 +81,7 @@ export class Vak {
         this._vakkenlijst.save();
     }
 
+    // Een vak moet zichzelf als <tr> renderen in de <tbody> die de Vakkenlijst doorgeeft.
     render(tbody) {
         let tr =
             `<tr id="vak-${this.id}">

@@ -71,6 +71,7 @@ export class Vakkenlijst {
             }));
     }
 
+    // Een vakkenlijst moet zichzelf als <table> renderen in het html element dat de caller doorgeeft.
     render(element) {
         let table =
             `<table id="vakkenlijst" class="table">
