@@ -26,7 +26,7 @@ function save() {
 }
 
 // Deze functie geeft visuele feedback bij overschrijding van het max aantal uren.
-// Bemerk dat we een class 'maxAantalUren' hebben toegevoegd aan de <td>'s in de html om gemakkelijk het aantal uren op te halen.
+// Bemerk dat we een class 'maxAantalUren' hebben toegevoegd aan de <td>'s in de html om gemakkelijk het maximum aantal uren op te halen.
 function geefFeedbackBijOverschrijding(vakId) {
     let maxAantalUrenTd = document.querySelector(`#${vakId} .maxAantalUren`);
     let aantalUrenInput = document.querySelector(`#${vakId} input`);
@@ -43,7 +43,7 @@ function geefFeedbackBijOverschrijding(vakId) {
 let vakkenEnAantalUrenAsString = localStorage.getItem(LOCAL_STORAGE_KEY);
 if (vakkenEnAantalUrenAsString) {
     // De value in een localStorage is steeds van het type string.
-    // Aangezien we daar een JSON array string hebben in bewaard moeten we die weer omzetten naar een JavaScript array door middel van JSON.parse().
+    // Aangezien we daar een JSON array hebben in bewaard moeten we die weer omzetten naar een JavaScript array door middel van JSON.parse().
     let vakkenEnAantalUren = JSON.parse(vakkenEnAantalUrenAsString);
     for (let i = 0; i < vakkenEnAantalUren.length; i++) {
         let aantalUrenInput = document.querySelector(`#${vakkenEnAantalUren[i].vakId} input`);
