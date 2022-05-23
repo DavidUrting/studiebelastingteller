@@ -1,0 +1,23 @@
+{
+  "name": "studiebelastingteller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm install && concurrently \"cd client && npm run start\" \"cd server && npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidUrting/studiebelastingteller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidUrting/studiebelastingteller/issues"
+  },
+  "homepage": "https://github.com/DavidUrting/studiebelastingteller#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.1"
+  }
+}
